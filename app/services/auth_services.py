@@ -4,20 +4,11 @@ from ..model.models import db, users
 from flask import jsonify
 
 def register_user(data):
-    
-    
-    # if "cpf" in data.keys(): 
-    #     campo = data["cpf"]
-    #     tipo_pessoa="cpf"
-    # else :
-    #     campo = data["cnpj"]
-    #     data.update({"tipo_pessoa": "cnpj"})
-    tipo_pessoa = data['tipo_pessoa']
     username = data['username']
     password = data['password']
     hashed_password = generate_password_hash(password)
     
-    user = users(username=username, password=hashed_password, tipo_pessoa=tipo_pessoa)
+    user = users(username=username, password=hashed_password)
     db.session.add(user)
     db.session.commit()
     
