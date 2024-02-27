@@ -1,6 +1,7 @@
 from flask import Flask
-from .model.models import db
+from .model.user import db
 from .routes.auth_routes import auth_bp
+from .routes import cards_routes
 from config import Config
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate  # Import Migrate
@@ -14,7 +15,8 @@ def create_app():
 
     # Initialize Flask-Migrate
     migrate = Migrate(app, db)
-
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(cards_routes.card_bp)
+
 
     return app
