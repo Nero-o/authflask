@@ -1,7 +1,7 @@
 from flask_jwt_extended import create_access_token
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..model.models import db, users
+from ..model.user import db, users
 from flask import jsonify
 import re
 

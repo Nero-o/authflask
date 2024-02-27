@@ -6,7 +6,6 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    # se nao for um dicionario transformar em um
     return register_user(data)
 
 @auth_bp.route('/login', methods=['POST'])
