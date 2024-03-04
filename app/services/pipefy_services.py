@@ -1,79 +1,144 @@
-# app/services/pipefy_service.py
 import requests
 
 PIPEFY_API_URL = "https://api.pipefy.com/graphql"
-
+PIPEFY_API_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJQaXBlZnkiLCJpYXQiOjE3MDk1MzEyMDEsImp0aSI6ImFmNzRkZTA3LWYzMDMtNDdlMy1iZGQwLWI1YzFkMzcwZjUzOCIsInN1YiI6MzAxOTkwMjQzLCJ1c2VyIjp7ImlkIjozMDE5OTAyNDMsImVtYWlsIjoicGF1bG9AbWFwc2NyZWRpdG8uY29tLmJyIiwiYXBwbGljYXRpb24iOjMwMDMyODU5Miwic2NvcGVzIjpbXX0sImludGVyZmFjZV91dWlkIjpudWxsfQ.gvsgXtEbiRXI0cI4HjrQsKx-vzE9A8eUmZV_4rjl7mcYV7dUyzXc1-vVE43un4wzYvNUS25_vNgI2Hs_J9e5HA"
 def create_pipefy_card(data):
+    headers = {
+        'Authorization': f'Bearer {PIPEFY_API_TOKEN}',
+        'Content-Type': 'application/json'
+    }
     # Extract data from the request
-    person_type = data.get('person_type')
-    name = data.get('name')
-    cpf = data.get('cpf')
-    marital_status = data.get('marital_status')
-    phone = data.get('phone')
+    tipo_pessoa = data.get('tipo_pessoa')
+    nome = data.get('nome')
+    cpf_cnpj = data.get('cpf_cnpj')
+    estado_civil = data.get('estado_civil')
+    telefone = data.get('telefone')
     email = data.get('email')
-    monthly_income = data.get('monthly_income')
-    property_type = data.get('property_type')
+    renda_mensal = data.get('renda_mensal')
+    tipo_terreno = data.get('tipo_terreno')
     cep = data.get('cep')
-    address = data.get('address')
-    number = data.get('number')
-    neighborhood = data.get('neighborhood')
-    city = data.get('city')
-    state = data.get('state')
-    property_value = data.get('property_value')
-    loan_value = data.get('loan_value')
-    payment_term = data.get('payment_term')
+    endereco = data.get('endereco')
+    numero = data.get('numero')
+    bairro = data.get('bairro')
+    cidade = data.get('cidade')
+    estado = data.get('estado')
+    valor_propriedade = data.get('valor_propriedade')
+    valor_emprestimo = data.get('valor_emprestimo')
+    prazo_pagamento = data.get('prazo_pagamento')
 
     # Prepare the request payload
     payload = {
-        "query": """
-        mutation {
-          createCard(input: {
-            pipeId: "your_pipe_id",
-            title: "%s",
-            fields_attributes: [
-              { fieldId: "person_type_field_id", fieldValue: "%s" },
-              { fieldId: "name_field_id", fieldValue: "%s" },
-              { fieldId: "cpf_field_id", fieldValue: "%s" },
-              { fieldId: "marital_status_field_id", fieldValue: "%s" },
-              { fieldId: "phone_field_id", fieldValue: "%s" },
-              { fieldId: "email_field_id", fieldValue: "%s" },
-              { fieldId: "monthly_income_field_id", fieldValue: "%s" },
-              { fieldId: "property_type_field_id", fieldValue: "%s" },
-              { fieldId: "cep_field_id", fieldValue: "%s" },
-              { fieldId: "address_field_id", fieldValue: "%s" },
-              { fieldId: "number_field_id", fieldValue: "%s" },
-              { fieldId: "neighborhood_field_id", fieldValue: "%s" },
-              { fieldId: "city_field_id", fieldValue: "%s" },
-              { fieldId: "state_field_id", fieldValue: "%s" },
-              { fieldId: "property_value_field_id", fieldValue: "%s" },
-              { fieldId: "loan_value_field_id", fieldValue: "%s" },
-              { fieldId: "payment_term_field_id", fieldValue: "%s" }
-            ]
-          }) {
-            card {
-              id
-              title
-            }
-          }
-        }
-        """ % (name, person_type, name, cpf, marital_status, phone, email, 
-               monthly_income, property_type, cep, address, number, 
-               neighborhood, city, state, property_value, loan_value, 
-               payment_term)
+        "query": f"""
+            mutation {{
+              createCard(input: {{
+                pipeId: "303394377",
+                title: "HOME EQUITY",
+                fieldsAttributes: [
+                  {{ fieldId: "tipo_pessoa_field_id", fieldValue: "{data.get('tipo_pessoa')}" }},
+                  {{ fieldId: "nome_field_id", fieldValue: "{data.get('nome')}" }},
+                  {{ fieldId: "cpf_cnpj_field_id", fieldValue: "{data.get('cpf_cnpj')}" }},
+                  {{ fieldId: "estado_civil_field_id", fieldValue: "{data.get('estado_civil')}" }},
+                  {{ fieldId: "telefone_field_id", fieldValue: "{data.get('telefone')}" }},
+                  {{ fieldId: "email_field_id", fieldValue: "{data.get('email')}" }},
+                  {{ fieldId: "renda_mensal_field_id", fieldValue: "{data.get('renda_mensal')}" }},
+                  {{ fieldId: "tipo_terreno_field_id", fieldValue: "{data.get('tipo_terreno')}" }},
+                  {{ fieldId: "cep_field_id", fieldValue: "{data.get('cep')}" }},
+                  {{ fieldId: "endereco_field_id", fieldValue: "{data.get('endereco')}" }},
+                  {{ fieldId: "numero_field_id", fieldValue: "{data.get('numero')}" }},
+                  {{ fieldId: "bairro_field_id", fieldValue: "{data.get('bairro')}" }},
+                  {{ fieldId: "cidade_field_id", fieldValue: "{data.get('cidade')}" }},
+                  {{ fieldId: "estado_field_id", fieldValue: "{data.get('estado')}" }},
+                  {{ fieldId: "valor_propriedade_field_id", fieldValue: "{data.get('valor_propriedade')}" }},
+                  {{ fieldId: "valor_emprestimo_field_id", fieldValue: "{data.get('valor_emprestimo')}" }},
+                  {{ fieldId: "prazo_pagamento_field_id", fieldValue: "{data.get('prazo_pagamento')}" }}
+                ]
+              }}) {{
+                card {{
+                  id
+                  title
+                }}
+              }}
+            }}
+        """
     }
 
-    # Make the request to Pipefy API
-    headers = {
-        "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJQaXBlZnkiLCJpYXQiOjE3MDkwMTY1NzIsImp0aSI6Ijg2YjlkMTlhLTNlMDQtNDllZC1iNjJhLTU3N2M1MGQ4NDJiMSIsInN1YiI6MzAxOTkwMjQzLCJ1c2VyIjp7ImlkIjozMDE5OTAyNDMsImVtYWlsIjoicGF1bG9AbWFwc2NyZWRpdG8uY29tLmJyIiwiYXBwbGljYXRpb24iOjMwMDMyNjI5OSwic2NvcGVzIjpbXX0sImludGVyZmFjZV91dWlkIjpudWxsfQ.ZjD_-XUqI8ofoGHzBB_lZK-kLb81JSdu0FkXjLNPR_zlGERTtjNMzxVdaKJNLTvh_3QSQtFwWOpyWY-qdJx0aA",
-        "Content-Type": "application/json"
-    }
     response = requests.post(PIPEFY_API_URL, json=payload, headers=headers)
 
     # Check if the request was successful
     if response.status_code == 200:
         result = response.json()
-        card_data = result['data']['createCard']['card']
-        return card_data
+        if 'data' in result and 'createCard' in result['data'] and 'card' in result['data']['createCard']:
+            card_data = result['data']['createCard']['card']
+            return card_data
+        else:
+            # Handle missing data
+            return None
     else:
         # Handle API error
+        return None
+
+
+def fetch_pipe_fields(pipe_id):
+    # Construct the GraphQL query to fetch fields for the specified Pipe
+    query = f"""
+        {{
+          pipe(id: "{303394377}") {{
+            phases {{
+              name
+              fields {{
+                id
+                label
+              }}
+            }}
+          }}
+        }}
+        """
+
+    # Make a request to the Pipefy API to fetch the fields
+    response = requests.post(
+        "https://api.pipefy.com/graphql",
+        json={"query": query},
+        headers={
+            'Authorization': f'Bearer {PIPEFY_API_TOKEN}',
+            'Content-Type': 'application/json'
+        }
+
+    )
+
+    # Parse the response
+    if response.status_code == 200:
+        data = response.json()
+        fields = data["data"]["pipe"]["phases"][0]["fields"]  # Assuming you're fetching fields from the first phase
+        field_names = [field["label"] for field in fields]
+        return field_names
+    else:
+        return None
+
+def fetch_card_fields(card_id):
+    query = f"""
+           {{
+             card(id: "{759461116}") {{
+                 fields {{
+                   id
+                 }}
+             }}
+           }}
+           """
+
+    response = requests.post(
+        "https://api.pipefy.com/graphql",
+        json={"query": query},
+        headers={
+            'Authorization': f'Bearer {PIPEFY_API_TOKEN}',
+            'Content-Type': 'application/json'
+        }
+    )
+
+    # Parse the response
+    if response.status_code == 200:
+        data = response.json()
+        fields = data["data"]["card"]["fields"]
+        field_names = [field["id"] for field in fields]
+        return field_names
+    else:
         return None
