@@ -7,56 +7,72 @@ from ..services.pipefy_services import create_pipefy_card
 from ..model.card import Card
 from .. import db
 
-def is_email_valid(email):
+
+def is_email_valid(e_mail):
     # Regex simples para validação de e-mail
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
+    return re.match(pattern, e_mail) is not None
+
+
+def create_pipefy_cards(card_data):
+    # card_data = create_pipefy_card(card_data)
+    new_card = Card(
+        tipo_de_pessoa=card_data.get('tipo_de_pessoa'),
+        nome_raz_o_social=card_data.get('nome_raz_o_social'),
+        cpf=card_data.get('cpf'),
+        estado_civil=card_data.get('estado_civil'),
+        telefone=card_data.get('telefone'),
+        e_mail=card_data.get('email'),
+        valor_total_da_compra=card_data.get('valor_total_da_compra'),
+        qual_tipo_de_im_vel=card_data.get('qual_tipo_de_im_vel'),
+        cep=card_data.get('cep'),
+        endere_o=card_data.get('endere_o'),
+        n_mero=card_data.get('n_mero'),
+        bairro=card_data.get('bairro'),
+        cidade=card_data.get('cidade'),
+        estado=card_data.get('estado'),
+        qual_valor_do_im_vel=card_data.get('qual_valor_do_im_vel'),
+        qual_o_valor_do_empr_stimo=card_data.get('qual_o_valor_do_empr_stimo'),
+        prazo_pagamento=card_data.get('prazo_para_pagamento'),
+        indica_o=card_data.get('indica_o'),
+        assessor_respons_vel=card_data.get('301990243'),
+        pol_tica_de_privacidade=card_data.get('Li e concordo com a Política e Privacidade'),
+    )
+    db.session.add(new_card)
+    db.session.commit()
+    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}), 201
+
+    # return card_data
+
 
 def create_card(data):
-    required_fields = ['tipo_pessoa', 'nome', 'cpf_cnpj', 'estado_civil', 'telefone', 'email', 'renda_mensal',
-                       'tipo_terreno', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'valor_propriedade',
-                       'valor_emprestimo', 'prazo_pagamento', 'status']
-    for field in required_fields:
-        if field not in data or not data[field]:
-            return jsonify({'error': f'O campo {field} é obrigatório e não pode estar vazio.'}), 400
 
-    # Valida o valor da propriedade
-    valor_propriedade = float(data.get('valor_propriedade', 0))
-    if not (98000 <= valor_propriedade <= 60000000):
-        return jsonify({'error': 'O valor da propriedade deve estar entre R$ 98.000 e R$ 60.000.000.'}), 400
-
-    # Valida o prazo de pagamento
-    prazo_pagamento = int(data.get('prazo_pagamento', 0))
-    if not (36 <= prazo_pagamento <= 240):
-        return jsonify({'error': 'O prazo de pagamento deve estar entre 36 e 240 meses.'}), 400
-
-    # Valida o formato do e-mail
-    email = data.get('email')
-    if not is_email_valid(email):
-        return jsonify({'error': 'O formato do e-mail é inválido.'}), 400
 
     # Cria card no pipefy
-    # card_data = create_pipefy_card(data)
+    card_data = create_pipefy_card(data)
 
     # Salva card no banco de dados
     new_card = Card(
-        tipo_pessoa=data.get('tipo_pessoa'),
-        nome=data.get('nome'),
-        cpf_cnpj=data.get('cpf_cnpj'),
+        tipo_de_pessoa=card_data.get('tipo_de_pessoa'),
+        nome_raz_o_social=data.get('nome_raz_o_social'),
+        cpf=data.get('cpf'),
         estado_civil=data.get('estado_civil'),
         telefone=data.get('telefone'),
-        email=data.get('email'),
-        renda_mensal=data.get('renda_mensal'),
-        tipo_terreno=data.get('tipo_terreno'),
+        e_mail=data.get('email'),
+        valor_total_da_compra=data.get('valor_total_da_compra'),
+        qual_tipo_de_im_vel=data.get('qual_tipo_de_im_vel'),
         cep=data.get('cep'),
-        endereco=data.get('endereco'),
-        numero=data.get('numero'),
+        endere_o=data.get('endere_o'),
+        n_mero=data.get('n_mero'),
         bairro=data.get('bairro'),
         cidade=data.get('cidade'),
         estado=data.get('estado'),
-        valor_propriedade=data.get('valor_propriedade'),
-        valor_emprestimo=data.get('valor_emprestimo'),
-        prazo_pagamento=data.get('prazo_pagamento'),
+        qual_valor_do_im_vel=data.get('qual_valor_do_im_vel'),
+        qual_o_valor_do_empr_stimo=data.get('qual_o_valor_do_empr_stimo'),
+        prazo_para_pagamento=data.get('prazo_para_pagamento'),
+        indica_o=data.get('indica_o'),
+        assessor_respons_vel=data.get('301990243'),
+        pol_tica_de_privacidade=data.get('Li e concordo com a Política e Privacidade'),
         status=data.get('status')
     )
     db.session.add(new_card)
@@ -64,10 +80,12 @@ def create_card(data):
 
     return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}), 201
 
+
 def get_cards():
     cards = Card.query.all()
     cards_list = [card.to_dict() for card in cards]
     return jsonify(cards_list), 200
+
 
 def approve_card(card_id):
     card = Card.query.get(card_id)
@@ -85,6 +103,8 @@ def approve_card(card_id):
     db.session.commit()
 
     return jsonify({'message': 'Card movido para aprovados com sucesso.'}), 200
+
+
 def update_card_status(card_id, new_status):
     card = Card.query.get(card_id)
     if not card:
@@ -99,4 +119,3 @@ def update_card_status(card_id, new_status):
         db.session.delete(card)
 
     db.session.commit()
-

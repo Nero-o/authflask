@@ -1,7 +1,6 @@
 
 from flask import Blueprint, request, jsonify
-from ..controllers.card_controller import create_card, get_cards, update_card_status
-from ..services.pipefy_services import fetch_pipe_fields, fetch_card_fields
+from ..controllers.card_controller import create_card, get_cards, update_card_status, create_pipefy_cards
 
 card_bp = Blueprint('api', __name__)
 
@@ -9,12 +8,15 @@ card_bp = Blueprint('api', __name__)
 def create_cards():
     data = request.get_json()
     return create_card(data)
+
+
+@card_bp.route('/pipefy', methods=['POST'])
+def create_pipefy():
+    data = request.get_json()
+    return create_pipefy_cards(data)
 def handle_get_cards():
     return get_cards()
-
-
 @card_bp.route('/cards/<int:card_id>/status', methods=['PATCH'])
-
 def change_card_status(card_id):
     data = request.get_json()
     new_status = data.get('status')
