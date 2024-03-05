@@ -65,10 +65,6 @@ def login_user(data):
     email = data.get('email')
     password = data.get('password')
 
-    # Validações de campos não vazios e formato de email
-    if not email or not password:
-        return jsonify({"msg": "Email e senha são obrigatórios"}), 400
-
     if not validate_email(email):
         return jsonify({"msg": "Formato de email inválido"}), 400
 

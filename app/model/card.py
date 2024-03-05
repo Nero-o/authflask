@@ -22,7 +22,7 @@ class Card(db.Model):
     prazo_pagamento = db.Column(db.String(50), nullable=False)
     indica_o = db.Column(db.String(100), nullable=True)
     assessor_respons_vel = db.Column(db.String(100), nullable=True)
-    pol_tica_de_privacidade = db.Column(db.Boolean, default=False, nullable=False)
+    pol_tica_de_privacidade = db.Column(db.String(100), default=False, nullable=False)
 
     def to_dict(self):
         return {

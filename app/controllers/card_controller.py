@@ -15,14 +15,13 @@ def is_email_valid(e_mail):
 
 
 def create_pipefy_cards(card_data):
-    # card_data = create_pipefy_card(card_data)
     new_card = Card(
         tipo_de_pessoa=card_data.get('tipo_de_pessoa'),
         nome_raz_o_social=card_data.get('nome_raz_o_social'),
         cpf=card_data.get('cpf'),
         estado_civil=card_data.get('estado_civil'),
         telefone=card_data.get('telefone'),
-        e_mail=card_data.get('email'),
+        e_mail=card_data.get('e_mail'),
         valor_total_da_compra=card_data.get('valor_total_da_compra'),
         qual_tipo_de_im_vel=card_data.get('qual_tipo_de_im_vel'),
         cep=card_data.get('cep'),
@@ -35,14 +34,16 @@ def create_pipefy_cards(card_data):
         qual_o_valor_do_empr_stimo=card_data.get('qual_o_valor_do_empr_stimo'),
         prazo_pagamento=card_data.get('prazo_para_pagamento'),
         indica_o=card_data.get('indica_o'),
-        assessor_respons_vel=card_data.get('301990243'),
-        pol_tica_de_privacidade=card_data.get('Li e concordo com a Política e Privacidade'),
+        assessor_respons_vel=card_data.get('assessor_respons_vel'),
+        pol_tica_de_privacidade=card_data.get('pol_tica_de_privacidade'),
     )
     db.session.add(new_card)
     db.session.commit()
-    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}), 201
 
-    # return card_data
+    card_data = create_pipefy_card(card_data)
+
+    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}, card_data), 201
+
 
 
 def create_card(data):
