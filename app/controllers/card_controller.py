@@ -15,6 +15,7 @@ def is_email_valid(e_mail):
 
 
 def create_pipefy_cards(card_data):
+
     new_card = Card(
         tipo_de_pessoa=card_data.get('tipo_de_pessoa'),
         nome_raz_o_social=card_data.get('nome_raz_o_social'),
@@ -32,29 +33,23 @@ def create_pipefy_cards(card_data):
         estado=card_data.get('estado'),
         qual_valor_do_im_vel=card_data.get('qual_valor_do_im_vel'),
         qual_o_valor_do_empr_stimo=card_data.get('qual_o_valor_do_empr_stimo'),
-        prazo_pagamento=card_data.get('prazo_para_pagamento'),
+        prazo_pagamento=card_data.get('prazo_pagamento'),
         indica_o=card_data.get('indica_o'),
         assessor_respons_vel=card_data.get('assessor_respons_vel'),
-        pol_tica_de_privacidade=card_data.get('pol_tica_de_privacidade'),
     )
     db.session.add(new_card)
     db.session.commit()
 
-    card_data = create_pipefy_card(card_data)
+    data = create_pipefy_card(card_data)
 
-    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}, card_data), 201
-
+    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}, data), 201
 
 
 def create_card(data):
 
-
-    # Cria card no pipefy
-    card_data = create_pipefy_card(data)
-
     # Salva card no banco de dados
     new_card = Card(
-        tipo_de_pessoa=card_data.get('tipo_de_pessoa'),
+        tipo_de_pessoa=data.get('tipo_de_pessoa'),
         nome_raz_o_social=data.get('nome_raz_o_social'),
         cpf=data.get('cpf'),
         estado_civil=data.get('estado_civil'),
@@ -74,12 +69,11 @@ def create_card(data):
         indica_o=data.get('indica_o'),
         assessor_respons_vel=data.get('301990243'),
         pol_tica_de_privacidade=data.get('Li e concordo com a Política e Privacidade'),
-        status=data.get('status')
     )
     db.session.add(new_card)
     db.session.commit()
 
-    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}), 201
+    return jsonify({'message': 'Card criado com sucesso', 'card': new_card.to_dict()}, card_data), 201
 
 
 def get_cards():

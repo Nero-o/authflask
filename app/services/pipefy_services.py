@@ -13,7 +13,7 @@ def create_pipefy_card(data):
     cpf = data.get('cpf')
     estado_civil = data.get('estado_civil')
     telefone = data.get('telefone')
-    e_mail = data.get('email')
+    e_mail = data.get('e_mail')
     valor_total_da_compra = data.get('valor_total_da_compra')
     qual_tipo_de_im_vel = data.get('qual_tipo_de_im_vel')
     cep = data.get('cep')
@@ -24,7 +24,7 @@ def create_pipefy_card(data):
     estado = data.get('estado')
     qual_valor_do_im_vel = data.get('qual_valor_do_im_vel')
     qual_o_valor_do_empr_stimo = data.get('qual_o_valor_do_empr_stimo')
-    prazo_para_pagamento = data.get('prazo_para_pagamento')
+    prazo_pagamento = data.get('prazo_pagamento')
     indica_o = data.get('indica_o')
     assessor_respons_vel = data.get('301990243')
     pol_tica_de_privacidade = data.get('Li e concordo com a Política e Privacidade')
@@ -54,7 +54,7 @@ def create_pipefy_card(data):
                   {{ field_id: "estado", field_value: "{data.get('estado')}" }},
                   {{ field_id: "qual_valor_do_im_vel", field_value: "{data.get('qual_valor_do_im_vel')}" }},
                   {{ field_id: "qual_o_valor_do_empr_stimo", field_value: "{data.get('qual_o_valor_do_empr_stimo')}" }},
-                  {{ field_id: "prazo_para_pagamento", field_value: "{data.get('prazo_para_pagamento')}" }},
+                  {{ field_id: "prazo_para_pagamento", field_value: "{data.get('prazo_pagamento')}" }},
                   {{ field_id: "indica_o", field_value: "{'Não'}" }},
                   {{ field_id: "assessor_respons_vel", field_value: "{'301990243'}" }},
                   {{ field_id: "pol_tica_de_privacidade", field_value: "{'Li e concordo com a Política e Privacidade'}" }}
