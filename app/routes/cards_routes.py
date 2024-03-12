@@ -18,9 +18,9 @@ def handle_get_cards():
     return get_cards()
 
 
-@card_bp.route('/cards/<int:card_id>', methods=['GET'])
+@card_bp.route('/pipefy/get_cards/<int:card_id>', methods=['GET'])
 def handle_get_card_by_id(card_id):
-    return get_card_by_id(card_id)
+    return get_card_by_id()
 
 @card_bp.route('/pipefy/approve_cards', methods=['POST'])
 def handle_approve_cards():

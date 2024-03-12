@@ -61,8 +61,8 @@ def get_cards():
     return jsonify(cards_list), 200
 
 
-def get_card_by_id(card_id):
-    card = Card.query.get(card_id)
+def get_card_by_id():
+    card = Card.query.get(id)
     # Verifica se o card foi encontrado
     if card is not None:
         # Card encontrado, retorna os dados do card

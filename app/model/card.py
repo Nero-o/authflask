@@ -28,6 +28,7 @@ class Card(db.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             "tipo_de_pessoa": self.tipo_de_pessoa,
             "nome_raz_o_social": self.nome_raz_o_social,
             "cpf": self.cpf,
