@@ -1,34 +1,28 @@
 
 from flask import Blueprint, request, jsonify
-from ..controllers.card_controller import create_card, get_cards, update_card_status, create_pipefy_cards
+from flask_cors import cross_origin, CORS
+
+from ..controllers.card_controller import get_cards, update_card_status, create_pipefy_cards, approve_cards
 
 card_bp = Blueprint('api', __name__)
-
-@card_bp.route('/cards', methods=['POST'])
-def create_cards():
-    data = request.get_json()
-    return create_card(data)
+CORS(card_bp)
 
 
 @card_bp.route('/pipefy', methods=['POST'])
 def create_pipefy():
     data = request.get_json()
     return create_pipefy_cards(data)
+
+
+@card_bp.route('/pipefy/get_cards', methods=['GET'])
 def handle_get_cards():
     return get_cards()
-@card_bp.route('/cards/<int:card_id>/status', methods=['PATCH'])
-def change_card_status(card_id):
-    data = request.get_json()
-    new_status = data.get('status')
 
-    if not new_status:
-        return jsonify({'error': 'O status é obrigatório.'}), 400
 
-    try:
-        response = update_card_status(card_id, new_status)
-        return response
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+@card_bp.route('/pipefy/approve_cards', methods=['POST'])
+def handle_approve_cards():
+    return approve_cards()
+
 
 # @card_bp.route("/pipe-fields/<pipe_id>", methods=["GET"])
 # def get_pipe_fields(pipe_id):
