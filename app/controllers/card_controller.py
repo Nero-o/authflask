@@ -61,6 +61,17 @@ def get_cards():
     return jsonify(cards_list), 200
 
 
+def get_card_by_id(card_id):
+    card = Card.query.get(card_id)
+    # Verifica se o card foi encontrado
+    if card is not None:
+        # Card encontrado, retorna os dados do card
+        return jsonify(card.to_dict()), 200
+    else:
+        # Card não encontrado, retorna uma mensagem de erro
+        return jsonify({'message': 'Card não encontrado.'}), 404
+
+
 def approve_cards():
     # Busca todos os cards aprovados atuais
     current_approved_cards = ApprovedCard.query.all()
