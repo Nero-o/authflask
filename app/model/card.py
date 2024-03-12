@@ -1,4 +1,6 @@
 from ..services.db import db
+
+
 class Card(db.Model):
     __tablename__ = 'cards'
 

@@ -1,9 +1,6 @@
 import re
-
-from flask import jsonify, request
-
+from flask import jsonify
 from ..model.approved_cards import ApprovedCard
-from ..services.pipefy_services import create_pipefy_card
 from ..model.card import Card
 from .. import db
 
@@ -96,6 +93,7 @@ def approve_cards():
         'message': f'{len(cards_to_approve)} cards movidos para aprovados com sucesso, se houver.',
         'approved_cards': updated_approved_cards_list
     }), 200
+
 
 def update_card_status(card_id, new_status):
     card = Card.query.get(card_id)

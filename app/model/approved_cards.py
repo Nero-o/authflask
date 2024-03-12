@@ -24,7 +24,6 @@ class ApprovedCard(db.Model):
     assessor_respons_vel = db.Column(db.String(100), nullable=True)
     status = db.Column(db.String(50), nullable=True)
 
-
     def to_dict(self):
         return {
             "tipo_de_pessoa": self.tipo_de_pessoa,
