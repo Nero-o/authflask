@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_cors import CORS
 
-from ..controllers.card_controller import get_cards, create_pipefy_cards, approve_cards, get_card_by_id
+from ..controllers.card_controller import get_cards, create_pipefy_cards, approve_cards, get_card_by_id, get_approved_card_by_id
 
 card_bp = Blueprint('api', __name__)
 CORS(card_bp)
@@ -20,8 +20,14 @@ def handle_get_cards():
 
 @card_bp.route('/pipefy/get_cards/<int:card_id>', methods=['GET'])
 def handle_get_card_by_id(card_id):
-    return get_card_by_id()
+    return get_card_by_id(card_id)
+
 
 @card_bp.route('/pipefy/approve_cards', methods=['POST'])
 def handle_approve_cards():
     return approve_cards()
+
+
+@card_bp.route('/pipefy/get_approved_cards/<int:card_id>', methods=['GET'])
+def handle_get_approve_cards(card_id):
+    return get_approved_card_by_id(card_id)
