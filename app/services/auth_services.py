@@ -1,7 +1,7 @@
 from flask_jwt_extended import create_access_token
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..model.user import db, users
+from ..model.user import db, Users
 from flask import jsonify
 import re
 
@@ -9,6 +9,8 @@ import re
 def validate_email(email):
     # Regex simples para validação de email
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
+
+
 def register_user(data):
     required_fields = ['username', 'password', 'email']
     for field in required_fields:
@@ -41,7 +43,7 @@ def register_user(data):
     hashed_password = generate_password_hash(data['password'])
 
     # Criar usuário
-    new_user = users(
+    new_user = Users(
         username=data['username'],
         password=hashed_password,
         email=data['email'],
@@ -69,7 +71,7 @@ def login_user(data):
         return jsonify({"msg": "Formato de email inválido"}), 400
 
     # Tenta encontrar o usuário pelo email
-    user = users.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).first()
 
     # Verifica se o usuário existe e se a senha está correta
     if user and check_password_hash(user.password, password):
