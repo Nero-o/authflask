@@ -2,13 +2,13 @@ from flask_jwt_extended import create_access_token
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from ..model.user import db, Users
-from flask import jsonify
+from flask import jsonify, request
 import re
 
 
 def validate_email(email):
-    # Regex simples para validação de email
-    return re.match(r"[^@]+@[^@]+\.[^@]+", email)
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(email_regex, email) is not None
 
 
 def register_user(data):
@@ -64,6 +64,7 @@ def register_user(data):
 
 
 def login_user(data):
+    data = request.get_json()
     email = data.get('email')
     password = data.get('password')
 
