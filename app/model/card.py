@@ -1,9 +1,10 @@
 from ..services.db import db
+import uuid
 
 class Card(db.Model):
     __tablename__ = 'cards'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     tipo_de_pessoa = db.Column(db.String(50), nullable=False)
     nome = db.Column(db.String(255), nullable=False)
     cpf = db.Column(db.String(14), nullable=True)
