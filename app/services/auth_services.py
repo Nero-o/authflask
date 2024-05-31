@@ -21,7 +21,7 @@ def register_user(data):
     if not validate_email(data['email']):
         return jsonify({'message': 'Formato de email inválido.'}), 400
 
-    user_type = data['user_type']
+    user_type = data.get('user_type')
     cpf = data.get('cpf')
     cnpj = data.get('cnpj')
 
@@ -76,7 +76,8 @@ def login_user(data):
 
     # Verifica se o usuário existe e se a senha está correta
     if user and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=email)
+        additional_claims = {'email': user.email, 'name': user.username}
+        access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "Email ou senha inválidos"}), 401
